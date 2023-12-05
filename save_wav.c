@@ -11,7 +11,6 @@ typedef struct {
     double frequency; // サイン波の周波数（Hz）
 } WavSettings;
 
-// WAVファイルのヘッダを書く関数
 void writeWavHeader(FILE *file, WavSettings settings, int dataSize) {
     int chunkSize = 36 + dataSize;
     int subchunk1Size = 16;
@@ -35,7 +34,6 @@ void writeWavHeader(FILE *file, WavSettings settings, int dataSize) {
     fwrite(&dataSize, 4, 1, file);
 }
 
-// WAVファイルを初期化する関数（無音データを書き込む部分を削除）
 void initializeWavFile(const char *filename, WavSettings settings) {
     FILE *file = fopen(filename, "wb");
     if (!file) {
@@ -51,7 +49,6 @@ void initializeWavFile(const char *filename, WavSettings settings) {
     fclose(file);
 }
 
-// サイン波を生成してWAVファイルに書き込む関数（ファイルを書き込みモードで開く）
 void generateSineWave(const char *filename, WavSettings settings) {
     FILE *file = fopen(filename, "wb");
     if (!file) {
@@ -77,12 +74,10 @@ void generateSineWave(const char *filename, WavSettings settings) {
 }
 
 int main() {
-    WavSettings settings = {44100, 16, 1, 5.0, 440.0}; // 440Hzのサイン波を設定
+    WavSettings settings = {44100, 16, 1, 5.0, 440.0};
 
-    // WAVファイルを初期化
     initializeWavFile("sine_wave.wav", settings);
 
-    // サイン波を生成してWAVファイルに書き込む
     generateSineWave("sine_wave.wav", settings);
 
     return 0;
